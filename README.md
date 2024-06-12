@@ -2,7 +2,7 @@
 
 ## Overview
 
-This application allows users to search for members and view their locations on a map. The map is powered by Mapbox GL, and the search functionality is integrated with Algolia's instant search capabilities. Users can click on a member from the search suggestions to autofill the search bar and zoom into the selected member's location on the map.
+This application allows users to search for members and view their locations on a map. The map is powered by Mapbox GL, and the search functionality is integrated with Algolia's instant search capabilities. Users can click on a member from the search suggestions to zoom into the selected member's location on the map.
 
 ## Features
 
