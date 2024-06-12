@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+input {
+  @apply outline-none border border-none px-2;
+}
+.ais-SearchBox-submit{
+  @apply hidden;
+}
+
+.ais-SearchBox-reset {
+  @apply hidden;
+}
