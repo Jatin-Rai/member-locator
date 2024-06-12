@@ -25,7 +25,7 @@ This application allows users to search for members and view their locations on 
 1. **Clone the Repository**
 
     ```sh
-    git clone https://github.com/your-username/member-locator.git
+    git clone https://github.com/Jatin-Rai/member-locator.git
     cd member-locator
     ```
 
