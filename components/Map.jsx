@@ -6,8 +6,6 @@ import mapboxgl from 'mapbox-gl';
 
 import Button from './Button';
 
-import { calculateOffset } from '@/utils/calculateOffset';
-
 /**
  * Map component
  * 
@@ -30,7 +28,7 @@ const Map = ({ members, mapRef }) => {
         container: mapContainer.current,
         style: 'mapbox://styles/mapbox/streets-v11',
         center: [0, 0],
-        zoom: 1.5
+        zoom: 1.4
       });
 
       mapInstance.on('load', () => {
@@ -71,33 +69,60 @@ const Map = ({ members, mapRef }) => {
 
       // Add new markers
       Object.values(coordinateGroups).forEach((group) => {
-        group.forEach((member, memberIndex) => {
-          const memberElement = document.createElement('div');
-          memberElement.className = 'member-marker relative bg-white p-2 rounded-lg shadow-lg flex items-center space-x-2';
+        const memberElement = document.createElement('div');
+        memberElement.className = 'member-marker relative bg-white text-black p-2 rounded-lg shadow-lg flex items-center justify-center space-x-2';
 
-          const memberContent = member.photo
-            ? `<img src="${member.photo}" alt="${member.fullName}" class="w-10 h-10 rounded-full" />`
-            : `<div class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center">${member.fullName.charAt(0)}</div>`;
+        if (group.length > 1) {
+          // Create a dropdown for locations with multiple members
+          const dropdownContent = group.map(member => `
+            <div class="flex items-center justify-center space-x-2 mb-2">
+              ${member.photo
+                ? `<img src="${member.photo}" alt="${member.fullName}" class="w-10 h-10 rounded-full" />`
+                : `<div class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center">${member.fullName.charAt(0)}</div>`
+              }
+              <div>
+                <p class="text-xs font-semibold">${member.fullName}</p>
+                ${member['location.city'] ? `<p class="text-xs">${member['location.city']}</p>` : ''}
+              </div>
+            </div>
+          `).join('');
 
           memberElement.innerHTML = `
-            ${memberContent}
+            <div class="relative">
+              <button class="dropdown-toggle text-xs font-semibold">Members (${group.length})</button>
+              <div class="dropdown-content absolute -top-2 left-28 bg-white shadow-lg rounded-lg p-4 hidden">
+                ${dropdownContent}
+              </div>
+            </div>
+          `;
+
+          // Toggle dropdown visibility on click
+          memberElement.querySelector('.dropdown-toggle').addEventListener('click', () => {
+            const dropdown = memberElement.querySelector('.dropdown-content');
+            dropdown.classList.toggle('hidden');
+          });
+        } else {
+          // Display single member information directly
+          const member = group[0];
+          memberElement.innerHTML = `
+            ${member.photo
+              ? `<img src="${member.photo}" alt="${member.fullName}" class="w-10 h-10 rounded-full" />`
+              : `<div class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center">${member.fullName.charAt(0)}</div>`
+            }
             <div>
               <p class="text-xs font-semibold">${member.fullName}</p>
               ${member['location.city'] ? `<p class="text-xs">${member['location.city']}</p>` : ''}
             </div>
           `;
+        }
 
-          // Calculate offset for overlapping markers
-          const [offsetX, offsetY] = calculateOffset(memberIndex, group.length);
+        new mapboxgl.Marker(memberElement)
+          .setLngLat([group[0]['location.lng'], group[0]['location.lat']])
+          .addTo(map);
 
-          new mapboxgl.Marker(memberElement)
-            .setLngLat([member['location.lng'] + offsetX, member['location.lat'] + offsetY])
-            .addTo(map);
-
-          // Add click event listener to marker element to fly to the marker
-          memberElement.addEventListener('click', () => {
-            map.flyTo({ center: [member['location.lng'], member['location.lat']], zoom: 5.5 });
-          });
+        // Add click event listener to marker element to fly to the marker
+        memberElement.addEventListener('click', () => {
+          map.flyTo({ center: [group[0]['location.lng'], group[0]['location.lat']], zoom: 5.5 });
         });
       });
     }
@@ -107,7 +132,7 @@ const Map = ({ members, mapRef }) => {
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape') {
-        map.flyTo({ center: [0, 0], zoom: 1.5 });
+        map.flyTo({ center: [0, 0], zoom: 1.4 });
       }
     };
 
@@ -146,4 +171,3 @@ const Map = ({ members, mapRef }) => {
 };
 
 export default Map;
-

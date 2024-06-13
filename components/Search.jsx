@@ -28,7 +28,7 @@ const Search = ({ onSearchResults, mapRef }) => {
   }, [onSearchResults]);
 
   return (
-    <div className="absolute left-10 top-10 z-50">
+    <div className="absolute left-4 top-5 z-50">
       <InstantSearch searchClient={searchClient} indexName="maps_search">
         <SearchBox
           autoFocus
