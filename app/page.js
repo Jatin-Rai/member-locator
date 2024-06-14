@@ -31,7 +31,6 @@ export default function Home() {
         setFilteredMembers(hits);
         setLoading(false);
       } catch (error) {
-        console.error('Error fetching members data from Algolia:', error);
         setError(error);
         setLoading(false);
       }
