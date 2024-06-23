@@ -6,6 +6,20 @@ import Button from './Button';
 import MarkerPortal from './MarkerPortal';
 import Image from 'next/image';
 
+/**
+ * Map Component
+ *
+ * This component initializes a Mapbox map, handles zooming in and out, and places markers for given members.
+ * The markers are grouped by their coordinates, and clicking on a marker zooms in on the location.
+ *
+ * @param {object} mapRef - A ref object to store the map instance.
+ * @param {Array} members - Array of member objects with location data.
+ *
+ * @returns {JSX.Element} The rendered map and controls.
+ *
+ * Example:
+ * <Map mapRef={mapRef} members={membersData} />
+ */
 const Map = ({ mapRef, members }) => {
   const mapContainer = useRef(null);
   const [map, setMap] = useState(null);
