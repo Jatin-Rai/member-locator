@@ -19,8 +19,14 @@ const Search = ({ onSearchResults, mapRef }) => {
 
   // Handle input change in the search box
   const handleInputChange = useCallback((e) => {
-    setQuery(e.currentTarget.value);
-  }, []);
+    const value = e.currentTarget.value;
+    setQuery(value);
+
+    if (!value) {
+      // If the input is cleared, reset the search results
+      onSearchResults([]);
+    }
+  }, [onSearchResults]);
 
   // Handle search results from Algolia
   const handleSearchResults = useCallback((hits) => {

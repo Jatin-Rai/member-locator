@@ -15,8 +15,8 @@ import Loader from '@/components/Loader';
  */
 export default function Home() {
 
+  const [initialMembers, setInitialMembers] = useState([]);
   const [members, setMembers] = useState([]);
-  const [filteredMembers, setFilteredMembers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   // Ref to store the map instance
@@ -26,9 +26,9 @@ export default function Home() {
   useEffect(() => {
     const fetchMembers = async () => {
       try {
-        const { hits } = await index.search('');
+        const { hits } = await index.search('', { hitsPerPage: 500 });
+        setInitialMembers(hits);
         setMembers(hits);
-        setFilteredMembers(hits);
         setLoading(false);
       } catch (error) {
         setError(error);
@@ -39,10 +39,10 @@ export default function Home() {
     fetchMembers();
   }, []);
 
-  // useCallback hook to handle search results and update filteredMembers state
+  // useCallback hook to handle search results and update members state
   const handleSearchResults = useCallback((results) => {
-    setFilteredMembers(results);
-  }, []);
+    setMembers(results.length > 0 ? results : initialMembers);
+  }, [initialMembers]);
 
   return (
     <main>
@@ -52,8 +52,8 @@ export default function Home() {
         <p className='text-red-500 font-semibold text-center mt-10'>{error.message}</p>
       ) : (
         <>
-          <Search onSearchResults={handleSearchResults} members={members} mapRef={mapRef} />
-          <Map members={filteredMembers} mapRef={mapRef} />
+          <Search onSearchResults={handleSearchResults} mapRef={mapRef} />
+          <Map members={members} mapRef={mapRef} />
         </>
       )}
     </main>

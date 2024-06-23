@@ -1,9 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-
 import { connectHits } from "react-instantsearch-dom";
-
 import Hit from "./Hit";
 
 /**
@@ -25,15 +23,15 @@ const CustomHits = connectHits(({ hits, onSearchResults, mapRef }) => {
     // Function to handle click on a search result
     const handleClick = (hit) => {
         if (mapRef.current && hit) {
-            mapRef.current.flyTo({ center: [hit['location.lng'], hit['location.lat']], zoom: 5.5 });
+            mapRef.current.flyTo({ center: [hit['location.lng'], hit['location.lat']], zoom: 12 });
         }
     };
 
     return (
         <div className="max-h-64 overflow-y-auto bg-white border border-gray-300 rounded-b-xl shadow-lg mt-1">
-            {hits.map(hit => <Hit key={hit.objectID} hit={hit} onClick={handleClick} />)}
+            {hits.map(hit => <Hit key={hit.objectID} hit={hit} onClick={() => handleClick(hit)} />)}
         </div>
     );
 });
 
-export default CustomHits;  
+export default CustomHits;
