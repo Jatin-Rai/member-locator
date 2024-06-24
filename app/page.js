@@ -2,8 +2,8 @@
 
 import React, { useCallback, useRef } from 'react';
 import { index } from '@/lib/algoliasearch';
-import Map from "@/components/Map";
-import Search from "@/components/Search";
+import Map from '@/components/Map';
+import Search from '@/components/Search';
 import Loader from '@/components/Loader';
 import useFetchMembers from '@/hooks/useFetchMembers';
 

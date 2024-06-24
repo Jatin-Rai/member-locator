@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { InstantSearch, SearchBox } from 'react-instantsearch-dom';
 import { searchClient } from '@/lib/algoliasearch';
 import CustomHits from './CustomHits';
+import lodash from 'lodash';
 
 /**
  * Search component
@@ -17,21 +18,22 @@ import CustomHits from './CustomHits';
 const Search = ({ onSearchResults, mapRef }) => {
   const [query, setQuery] = useState('');
 
-  // Handle input change in the search box
-  const handleInputChange = useCallback((e) => {
-    const value = e.target.value;
-    setQuery(value);
-
-    if (!value) {
-      // If the input is cleared, reset the search results
-      onSearchResults([]);
-    }
-  }, [onSearchResults]);
-
   // Handle search results from Algolia
   const handleSearchResults = useCallback((hits) => {
     onSearchResults(hits);
   }, [onSearchResults]);
+
+  // Handle input change in the search box with debounce
+  const handleInputChange = useMemo(() => 
+    lodash.debounce((e) => {
+      const value = e.target.value;
+      setQuery(value);
+
+      if (!value) {
+        onSearchResults([]);
+      }
+    }, 300), [onSearchResults]
+  );
 
   return (
     <div className="absolute left-4 top-5 z-50">

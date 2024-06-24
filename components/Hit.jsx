@@ -1,4 +1,4 @@
-import ImageAvatar from "./ImageAvatar";
+import ImageAvatar from './ImageAvatar';
 
 /**
  * Hit component

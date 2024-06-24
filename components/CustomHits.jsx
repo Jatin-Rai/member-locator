@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect } from "react";
-import { connectHits } from "react-instantsearch-dom";
-import Hit from "./Hit";
+import { useEffect } from 'react';
+import { connectHits } from 'react-instantsearch-dom';
+import Hit from './Hit';
 
 /**
  * CustomHits component

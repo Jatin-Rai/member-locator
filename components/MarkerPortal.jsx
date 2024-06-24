@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { createRoot } from "react-dom/client";
-import mapboxgl from "mapbox-gl";
-import ImageAvatar from "./ImageAvatar";
+import { useEffect, useRef } from 'react';
+import { createRoot } from 'react-dom/client';
+import mapboxgl from 'mapbox-gl';
+import ImageAvatar from './ImageAvatar';
 
 /**
  * MarkerPortal Component
