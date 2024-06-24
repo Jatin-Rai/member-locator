@@ -1,10 +1,11 @@
 "use client";
 
-import React, { useEffect, useState, useCallback, useRef } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { index } from '@/lib/algoliasearch';
 import Map from "@/components/Map";
 import Search from "@/components/Search";
 import Loader from '@/components/Loader';
+import useFetchMembers from '@/hooks/useFetchMembers';
 
 /**
  * Home component
@@ -15,34 +16,15 @@ import Loader from '@/components/Loader';
  */
 export default function Home() {
 
-  const [initialMembers, setInitialMembers] = useState([]);
-  const [members, setMembers] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { initialMembers, members, setMembers, loading, error } = useFetchMembers(index);
+
   // Ref to store the map instance
   const mapRef = useRef(null);
-
-  // useEffect hook to fetch members data from Algolia when the component mounts
-  useEffect(() => {
-    const fetchMembers = async () => {
-      try {
-        const { hits } = await index.search('', { hitsPerPage: 500 });
-        setInitialMembers(hits);
-        setMembers(hits);
-        setLoading(false);
-      } catch (error) {
-        setError(error);
-        setLoading(false);
-      }
-    };
-
-    fetchMembers();
-  }, []);
 
   // useCallback hook to handle search results and update members state
   const handleSearchResults = useCallback((results) => {
     setMembers(results.length > 0 ? results : initialMembers);
-  }, [initialMembers]);
+  }, [initialMembers, setMembers]);
 
   return (
     <main>

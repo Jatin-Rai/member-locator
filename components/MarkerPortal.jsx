@@ -28,7 +28,7 @@ const MarkerPortal = ({ children, lng, lat, map, members }) => {
 
     useEffect(() => {
         if (!map) {
-            return <p className="text-red-600">Unable to find map instance</p>;
+            return <p className="text-red-600 text-center">Unable to find map instance</p>;
         }
 
         const marker = markerRef.current;

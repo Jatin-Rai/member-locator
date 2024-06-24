@@ -8,13 +8,26 @@
   box-sizing: border-box;
 }
 
-input {
-  @apply outline-none border border-none px-2;
+.search-bar {
+  @apply flex justify-center w-full
 }
-.ais-SearchBox-submit{
+
+input {
+  @apply min-w-[250px] border-none rounded-md p-2 outline-none
+}
+
+.ais-SearchBox-submit {
   @apply hidden;
 }
 
 .ais-SearchBox-reset {
   @apply hidden;
+}
+
+.mapboxgl-popup-content {
+  @apply shadow-md;
+}
+
+.mapboxgl-popup-close-button {
+  @apply pt-[2px] pr-2 outline-none text-xl hover:bg-none;
 }

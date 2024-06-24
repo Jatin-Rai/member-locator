@@ -4,7 +4,6 @@ import React, { useEffect, useState, useCallback, useRef } from 'react';
 import mapboxgl from 'mapbox-gl';
 import Button from './Button';
 import MarkerPortal from './MarkerPortal';
-import Image from 'next/image';
 import ImageAvatar from './ImageAvatar';
 
 /**
@@ -18,8 +17,6 @@ import ImageAvatar from './ImageAvatar';
  *
  * @returns {JSX.Element} The rendered map and controls.
  *
- * Example:
- * <Map mapRef={mapRef} members={membersData} />
  */
 const Map = ({ mapRef, members }) => {
   const mapContainer = useRef(null);

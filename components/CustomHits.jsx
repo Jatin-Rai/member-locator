@@ -28,7 +28,7 @@ const CustomHits = connectHits(({ hits, onSearchResults, mapRef }) => {
     };
 
     return (
-        <div className="max-h-64 overflow-y-auto bg-white border border-gray-300 rounded-b-xl shadow-lg mt-1">
+        <div className="max-h-56 max-w-[250px] overflow-y-auto bg-white border border-gray-300 rounded-b-xl shadow-lg mt-1">
             {hits.map(hit => <Hit key={hit.objectID} hit={hit} onClick={() => handleClick(hit)} />)}
         </div>
     );

@@ -19,7 +19,7 @@ const Search = ({ onSearchResults, mapRef }) => {
 
   // Handle input change in the search box
   const handleInputChange = useCallback((e) => {
-    const value = e.currentTarget.value;
+    const value = e.target.value;
     setQuery(value);
 
     if (!value) {
@@ -40,7 +40,7 @@ const Search = ({ onSearchResults, mapRef }) => {
           autoFocus
           value={query}
           onChange={handleInputChange}
-          className="flex items-center bg-white border border-gray-300 rounded-lg p-2 shadow-lg"
+          className="search-bar"
           placeholder="Search members..."
           submitIconComponent={null}
           resetIconComponent={null}
