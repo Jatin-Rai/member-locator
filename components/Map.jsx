@@ -5,6 +5,7 @@ import mapboxgl from 'mapbox-gl';
 import Button from './Button';
 import MarkerPortal from './MarkerPortal';
 import Image from 'next/image';
+import ImageAvatar from './ImageAvatar';
 
 /**
  * Map Component
@@ -110,14 +111,10 @@ const Map = ({ mapRef, members }) => {
         const [lng, lat] = key.split(',').map(Number);
         return (
           <MarkerPortal key={key} lng={lng} lat={lat} map={map} members={members}>
-            {/* Pass the first member's photo to use as the marker */}
             {members[0].photo && (
-              <Image
-                src={members[0].photo}
-                alt={members[0].fullName}
-                height={30}
-                width={30}
-                className='rounded-full cursor-pointer'
+              <ImageAvatar
+                photo={members[0].photo}
+                fullName={members[0].fullName}
                 onClick={() => handleZoomToMember(lng, lat)}
               />
             )}
